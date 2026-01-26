@@ -1,0 +1,1156 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,700');
+
+/******************* FIXES FOR CN VERSION *******************/
+.cn .ctrlDesc {
+	font-size: 10px;
+}
+
+.cn #btnVR .ctrlDesc {
+	left: -10px;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	height: 100dvh;
+	/* Force dynamic viewport height */
+	overflow: hidden;
+	position: fixed;
+	/* iOS scrolling fix */
+	top: 0;
+	left: 0;
+
+	background: #000000;
+	/* Black to hide any potential gaps */
+	color: #fff;
+	font-family: "Roboto", sans-serif;
+	font-weight: 300;
+
+	/* Lock scroll on iOS */
+	touch-action: none;
+	-webkit-user-select: none;
+	user-select: none;
+	overscroll-behavior: none;
+}
+
+#pageMain {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	/* Keep these if needed for fallback */
+	/* width: 100vw; height: 100dvh; */
+	/* iOS dynamic viewport */
+	overflow: hidden;
+	/* Safe area insets for iOS notch/home bar */
+	/* Safe area insets REMOVED for immersive fullscreen */
+	/* padding-top: env(safe-area-inset-top); */
+	/* padding-bottom: env(safe-area-inset-bottom); */
+	box-sizing: border-box;
+}
+
+/* Ensure Three.js canvas fills viewport */
+#pageMain canvas {
+	width: 100% !important;
+	height: 100% !important;
+	display: block;
+}
+
+/******************* ON-SCREEN CONTROLS *******************/
+.ctrls {
+	width: 70px;
+	height: 45px;
+	position: absolute;
+	display: block;
+	top: 20px;
+	text-align: center;
+	color: #999;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.5s;
+}
+
+#ctrlKeys {
+	left: 10px;
+}
+
+#ctrlMouse {
+	left: 100px;
+}
+
+#ctrlScroll {
+	left: 190px;
+}
+
+.ctrlIcon {
+	width: 35px;
+	height: 35px;
+	display: inline-block;
+	background: url("../textures/icoCtrls.png") 0% 50% / 300% 100% no-repeat;
+}
+
+#ctrlIcoKeys {}
+
+#ctrlIcoMouse {
+	background-position: 50% 50%;
+}
+
+#ctrlIcoScroll {
+	background-position: 100% 50%;
+}
+
+.ctrlDesc {
+	font-size: 6px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	white-space: nowrap;
+	font-weight: 700;
+	display: block;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	pointer-events: none;
+}
+
+#btn-theme-desktop {
+	position: absolute;
+	top: 20px;
+	left: 280px;
+	width: 70px;
+	height: 45px;
+	text-align: center;
+	color: #fff;
+	cursor: pointer;
+	font-size: 24px;
+	line-height: 40px;
+	pointer-events: auto;
+	z-index: 1000;
+	/* Fade In Logic */
+	opacity: 0;
+	transition: opacity 0.5s;
+}
+
+#btn-theme-desktop .ctrlIcon {
+	width: 100%;
+	background: none;
+	/* Override default icon bg */
+}
+
+#btn-theme-desktop .ctrlDesc {
+	color: #fff;
+	display: block;
+	/* Opacity handled by JS via .ctrls class */
+}
+
+/******************* MOBILE HEADS-UP DISPLAY *******************/
+.mobileHUD {
+	width: 100px;
+	height: 120px;
+	position: absolute;
+	top: 25%;
+	margin: -60px 5px 0px;
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 15px;
+	display: block;
+	opacity: 0;
+	transition: opacity 0.5s ease-in-out;
+	pointer-events: none;
+}
+
+@media (min-width: 700px) and (min-height: 500px) {
+
+	/* TABLET ONLY: Center Vertically */
+	.mobileHUD {
+		left: 45% !important;
+		margin-left: -50px;
+	}
+
+	#gear-shifter-container {
+		/* Right Side Middle */
+		top: 50% !important;
+		right: 0px !important;
+		transform: translateY(-50%) scale(0.9) !important;
+	}
+}
+
+@media (max-height: 500px) {
+
+	/* MOBILE LANDSCAPE: Stick to Top Right */
+	#gear-shifter-container {
+		top: 20px !important;
+		right: 20px !important;
+		transform: none !important;
+		bottom: auto !important;
+	}
+}
+
+#mobileHUDTilt {
+	right: 50%;
+}
+
+#mobileHUDTouch {
+	left: 50%;
+}
+
+
+
+@media (max-width: 800px) {
+	#btn-theme-desktop {
+		display: block !important;
+		left: auto;
+		right: 130px;
+		top: 20px;
+		z-index: 10000 !important;
+		top: 20px;
+		z-index: 10000 !important;
+		opacity: 0;
+		/* Start invisible */
+		transition: opacity 1s;
+		pointer-events: auto !important;
+		background: rgba(0, 0, 0, 0.3);
+		border-radius: 50%;
+		/* Mirror previous mobile placement */
+	}
+
+	#btn-theme-desktop .ctrlDesc {
+		display: none !important;
+	}
+
+	#btn-theme-desktop .ctrlIcon {
+		font-size: 30px;
+		line-height: 50px;
+	}
+
+}
+
+.mobileIcon {
+	background: url("../textures/icoMobile.png") 0% 50% / 200% 100% no-repeat;
+	width: 60px;
+	height: 60px;
+}
+
+#hudIcoTouch {
+	background-position: 100% 100%;
+}
+
+.mobileHUD .ctrlDesc {
+	width: 100%;
+	text-align: center;
+	font-size: 10px;
+	bottom: 5px;
+}
+
+/******************* ROUND BUTTONS *******************/
+#btnCase {
+	position: absolute;
+	bottom: 25px;
+	right: 0px;
+	height: 40px;
+	width: auto;
+	display: block;
+	pointer-events: none;
+}
+
+.btnBox {
+	display: none;
+	float: left;
+	position: relative;
+	width: 40px;
+	height: 40px;
+	margin-right: 20px;
+	text-align: center;
+	cursor: pointer;
+	pointer-events: auto;
+}
+
+.btnIcon {
+	width: 100%;
+	height: 100%;
+	border-radius: 20px;
+	background: url("../textures/icoBtns.png") 0% 0% / 500% 100% no-repeat;
+	background-color: #99604c;
+	pointer-events: none;
+}
+
+.btnBox .ctrlDesc {
+	bottom: -15px;
+}
+
+#btnVR .btnIcon {}
+
+#btnVRO .btnIcon {
+	background-position: 25% 0%;
+}
+
+#btnVREsc .btnIcon {
+	background-position: 50% 0%;
+}
+
+#btnEnterFull .btnIcon {
+	background-position: 75% 0%;
+}
+
+#btnExitFull .btnIcon {
+	background-position: 100% 0%;
+}
+
+
+/******************* JOYSTICK *******************/
+.joyStick {
+	position: absolute;
+	pointer-events: none;
+	left: 100px;
+	top: 100px;
+	display: none;
+}
+
+.joyStick circle {
+	fill: none;
+	stroke: #fff;
+}
+
+/*.joyStick polygon{fill:#fff;}*/
+#joyIn {
+	transform: translate(-34px, -34px);
+	stroke-width: 6;
+	width: 68px;
+	height: 68px;
+}
+
+#joyOut {
+	transform: translate(-60px, -60px);
+	stroke-width: 2;
+	width: 120px;
+	height: 120px;
+}
+
+.st1 {
+	fill: none;
+	stroke-width: 2;
+	stroke: #888;
+	stroke-linejoin: miter;
+}
+
+
+/******************* PRELOADER *******************/
+#preloader {
+	width: 300px;
+	height: auto;
+	position: fixed;
+	pointer-events: none;
+	top: 50%;
+	left: 50%;
+	/* Liquid Glass Style */
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(15px);
+	-webkit-backdrop-filter: blur(15px);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 16px;
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+	padding: 20px;
+	transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+	opacity: 0;
+	transform: translateY(10px);
+	margin: -35px 0 0 50px;
+}
+
+#preHeader {
+	font-size: 26px;
+	margin-bottom: 10px;
+}
+
+#preBar {
+	width: 100px;
+	height: 4px;
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 2px;
+	margin: 5px 0px 0px 1px;
+	border: none;
+}
+
+#preProg {
+	background: #FFCC99;
+	/* Peach accent */
+	height: 100%;
+	width: 0%;
+	border-radius: 2px;
+}
+
+#preDetail {
+	font-size: 16px;
+	padding-top: 5px;
+	color: rgba(255, 255, 255, 0.8);
+}
+
+#preButton {
+	background: rgba(255, 204, 153, 0.2);
+	/* Soft peach tint */
+	width: 220px;
+	height: 40px;
+	margin-top: 15px;
+	position: relative;
+	pointer-events: auto;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+	display: none;
+	border: 1px solid rgba(255, 204, 153, 0.5);
+	border-radius: 20px;
+}
+
+#preButton:hover {
+	background: rgba(255, 204, 153, 0.4);
+	color: #fff;
+	transform: scale(1.05);
+}
+
+a {
+	color: #fff;
+}
+
+#preButText {
+	position: absolute;
+	top: 12px;
+	width: 220px;
+	text-align: center;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 1px;
+}
+
+#preLogo {
+	width: 140px;
+	height: 140px;
+	background: url("../textures/ffLogo.png") center center / 100% auto no-repeat;
+	position: absolute;
+	left: -160px;
+	top: 0px;
+	display: none;
+}
+
+#preloader.visible {
+	opacity: 1;
+	transform: translateY(0px);
+}
+
+@media screen and (max-width: 500px) {
+	#preloader {
+		margin: 70px 0 0 -110px;
+	}
+
+	#preLogo {
+		left: 0px;
+		top: -160px;
+	}
+}
+
+/******************* MOBILE CONTROLS *******************/
+#mobile-controls {
+	/* Removed display:none so it's visible for testing, JS can toggle it */
+	/* Wait, the JS toggles it based on touch event. I'll make it flex but hidden initially via JS or media query if needed. 
+       Actually, typically for hybrid apps, we want it visible if it's a touch device. 
+       The existing CSS had display:none by default. I'll keep it as flex but maybe let JS handle visibility?
+       The user wants it "FOR MOBILE". Existing JS checks `this.deviceTouch`.
+       Let's set default display to flex but z-index high. 
+    */
+	/* Hidden by default, shown via JS on game start if touch device */
+	display: none;
+	justify-content: space-between;
+	align-items: flex-end;
+	position: absolute;
+	bottom: 20px;
+	left: 0;
+	width: 100%;
+	padding: 0 30px;
+	box-sizing: border-box;
+	pointer-events: none;
+	/* Let children execute pointer events */
+	z-index: 1000;
+}
+
+.mobile-btn-round {
+	position: fixed;
+	top: 20px;
+	right: 160px;
+	/* Moved left of gear shifter */
+	width: 40px;
+	height: 40px;
+	background: rgba(0, 0, 0, 0.6);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	border-radius: 50%;
+	color: #fff;
+	font-size: 20px;
+	display: none;
+	/* Hidden by default - shown via JS on touch devices */
+	justify-content: center;
+	align-items: center;
+	z-index: 2001;
+	pointer-events: auto;
+	cursor: pointer;
+	backdrop-filter: blur(5px);
+}
+
+.mobile-btn-round:active {
+	transform: scale(0.9);
+	background: rgba(255, 255, 255, 0.2);
+}
+
+/* STEERING WHEEL CONTAINER */
+#steering-wheel-container {
+	width: 140px;
+	height: 140px;
+	position: relative;
+	pointer-events: auto;
+	filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.5));
+	animation: fadeInWheel 1s ease-out;
+}
+
+#steering-wheel {
+	width: 100%;
+	height: 100%;
+	transform-origin: center center;
+	/* Rotation handled by JS */
+}
+
+@keyframes fadeInWheel {
+	from {
+		opacity: 0;
+		transform: scale(0.5) rotate(-90deg);
+	}
+
+	to {
+		opacity: 1;
+		transform: scale(1) rotate(0deg);
+	}
+}
+
+/* KEYFRAMES FOR UI */
+@keyframes fadeInUI {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+
+
+
+#pedals-container {
+	display: flex;
+	gap: 20px;
+	pointer-events: auto;
+}
+
+.pedal {
+	width: 70px;
+	height: 130px;
+	background: #333;
+	border-radius: 10px;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.2);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	transform-origin: bottom center;
+	transition: transform 0.1s;
+}
+
+.pedal:active,
+.pedal-active {
+	transform: perspective(600px) rotateX(15deg) scale(0.95);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5), inset 0 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Aluminium Sport Pedal Styles */
+.pedal-plate {
+	width: 100%;
+	height: 100%;
+	/* Brushed Metal Gradient */
+	background:
+		repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0px, rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 5px),
+		linear-gradient(135deg, #bbb, #eee, #999);
+	border: 1px solid #888;
+	border-bottom: 4px solid #666;
+	border-radius: 8px;
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.5),
+		0 5px 10px rgba(0, 0, 0, 0.5);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	padding: 8px;
+	box-sizing: border-box;
+}
+
+.pedal-plate.vertical {
+	background:
+		repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0px, rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 3px),
+		linear-gradient(to bottom, #ccc, #f5f5f5, #a0a0a0);
+}
+
+.rubber-grip {
+	width: 80%;
+	height: 8px;
+	background: linear-gradient(to bottom, #222, #000);
+	border-radius: 2px;
+	box-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
+	border: 1px solid #000;
+}
+
+.rubber-grip.oval {
+	width: 60%;
+	height: 12px;
+	border-radius: 10px;
+	background: radial-gradient(circle at 30% 30%, #444, #111);
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8);
+	border: 1px solid #333;
+}
+
+.pedal-label {
+	position: absolute;
+	bottom: -30px;
+	color: rgba(255, 255, 255, 0.8);
+	font-size: 11px;
+	font-weight: 800;
+	font-family: 'Montserrat', sans-serif;
+	/* Cleaner font */
+	letter-spacing: 1px;
+	width: 100%;
+	text-align: center;
+	pointer-events: none;
+	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/******************* GEAR SHIFTER *******************/
+/******************* GEAR SHIFTER CONSOLE *******************/
+#gear-shifter-container {
+	position: fixed;
+	right: 80px;
+	/* Moved inward to avoid iOS swipe gesture conflict */
+	top: 20px;
+	width: 60px;
+	height: 140px;
+	pointer-events: auto;
+	perspective: 800px;
+	z-index: 2000;
+	display: none;
+	/* Hidden by default, shown via JS for touch devices */
+	touch-action: none;
+	/* Critical for dragging */
+}
+
+#gear-housing {
+	width: 100%;
+	height: 100%;
+	/* Carbon Fiber + Leather Console Look */
+	background:
+		linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8)),
+		repeating-linear-gradient(45deg, #111 0, #111 2px, #222 2px, #222 4px);
+	border: 2px solid #333;
+	border-radius: 15px;
+	box-shadow:
+		inset 0 0 20px rgba(0, 0, 0, 0.9),
+		0 10px 25px rgba(0, 0, 0, 0.7);
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 20px 0;
+	box-sizing: border-box;
+	/* overflow: hidden; Removed to ensure D position is visible */
+}
+
+/* The Slot Track */
+#gear-housing::before {
+	content: '';
+	position: absolute;
+	top: 15px;
+	bottom: 15px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 12px;
+	background: #000;
+	border-radius: 10px;
+	box-shadow: inset 0 0 5px rgba(0, 0, 0, 1);
+	z-index: 0;
+}
+
+.gear-slot {
+	/* Invisible hit targets or markers */
+	width: 100%;
+	height: 20px;
+	position: relative;
+	z-index: 1;
+}
+
+.gear-label {
+	position: absolute;
+	left: 10px;
+	/* Inside the housing */
+	top: 50%;
+	transform: translateY(-50%);
+	color: #555;
+	font-weight: 800;
+	font-size: 14px;
+	font-family: 'Montserrat', sans-serif;
+	pointer-events: none;
+	transition: color 0.2s, text-shadow 0.2s;
+}
+
+.gear-label.active {
+	color: #4CAF50;
+	/* Green LED glow */
+	text-shadow: 0 0 8px #4CAF50;
+}
+
+/* Red for Reverse */
+.gear-slot:nth-child(2) .gear-label.active {
+	color: #ff3333;
+	text-shadow: 0 0 8px #ff3333;
+}
+
+#gear-stick {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 60px;
+	/* Slightly wider base */
+	height: 50px;
+	/* Knob size */
+	z-index: 10;
+	cursor: grab;
+	touch-action: none;
+	/* Prevent scroll */
+}
+
+/* Invisible Hit Area Extension */
+#gear-stick::before {
+	content: '';
+	position: absolute;
+	top: -30px;
+	bottom: -30px;
+	left: -30px;
+	right: -30px;
+	z-index: 11;
+}
+
+#gear-stick:active {
+	cursor: grabbing;
+}
+
+#gear-stick:active {
+	cursor: grabbing;
+}
+
+#gear-knob {
+	width: 50px;
+	height: 36px;
+	/* Leather Knob */
+	background: radial-gradient(circle at 30% 30%, #444, #111);
+	border-radius: 8px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+	position: relative;
+	z-index: 2;
+	border-bottom: 2px solid #000;
+}
+
+/* Embossed N/Logo on knob */
+#gear-knob::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 30px;
+	height: 2px;
+	background: rgba(0, 0, 0, 0.5);
+
+	border-radius: 1px;
+}
+
+/* MINI MUSIC PLAYER */
+#music-player-mini {
+	position: fixed;
+	top: 20px;
+	left: 20px;
+	width: 180px;
+	height: 50px;
+	background: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 25px;
+	display: flex;
+	align-items: center;
+	padding: 0 15px;
+	z-index: 2000;
+	pointer-events: auto;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+	color: #fff;
+	justify-content: space-between;
+}
+
+#music-player-mini #music-info {
+	font-size: 12px;
+	font-weight: 700;
+	margin-right: 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 80px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+#music-controls-mini {
+	display: flex;
+	gap: 10px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+#music-controls-mini div {
+	transition: transform 0.2s;
+	opacity: 0.8;
+}
+
+#music-controls-mini div:hover {
+	transform: scale(1.2);
+	opacity: 1;
+}
+
+#music-controls-mini div:active {
+	transform: scale(0.9);
+}
+
+/* PORTRAIT BLOCKER */
+#portrait-blocker {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: #000;
+	z-index: 10000;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	font-family: 'Montserrat', sans-serif;
+	text-align: center;
+}
+
+.rotate-icon {
+	font-size: 50px;
+	margin-bottom: 20px;
+	animation: rotateIcon 2s infinite ease-in-out;
+}
+
+@keyframes rotateIcon {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	25% {
+		transform: rotate(-90deg);
+	}
+
+	50% {
+		transform: rotate(-90deg);
+	}
+
+	100% {
+		transform: rotate(0deg);
+	}
+}
+
+#portrait-blocker p {
+	font-size: 18px;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+}
+
+@media (orientation: portrait) {
+	#portrait-blocker {
+		display: flex;
+	}
+}
+
+
+#gear-rod {
+	/* Chrome Rod */
+	width: 8px;
+	height: 40px;
+	/* Extends down into the track */
+	background: linear-gradient(to right, #888, #fff, #888);
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	top: 30px;
+	z-index: 1;
+	display: none;
+	/* User requested removal */
+}
+
+/******************* ORIENTATION LOCK *******************/
+#orientation-lock {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #111;
+	z-index: 9999;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	text-align: center;
+}
+
+.lock-icon {
+	font-size: 60px;
+	margin-bottom: 20px;
+	animation: rotateIcon 2s infinite ease-in-out;
+}
+
+.lock-text {
+	font-family: 'Syncopate', sans-serif;
+	letter-spacing: 2px;
+}
+
+@keyframes rotateIcon {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	50% {
+		transform: rotate(90deg);
+	}
+
+	100% {
+		transform: rotate(0deg);
+	}
+}
+
+/* Enforce Landscape on Mobile */
+@media screen and (orientation: portrait) and (max-width: 900px) {
+	#orientation-lock {
+		display: flex;
+	}
+}
+
+/* Mobile Layout Overrides */
+
+
+/******************* LIQUID GLASS MUSIC PLAYER *******************/
+#music-player {
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+	width: 220px;
+	/* Smaller width */
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(15px);
+	-webkit-backdrop-filter: blur(15px);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 16px;
+	/* Smaller radius */
+	padding: 10px;
+	/* Smaller padding */
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+	z-index: 95;
+	font-family: 'Roboto', sans-serif;
+	color: white;
+	transition: transform 0.3s ease, opacity 0.5s ease;
+	opacity: 0;
+	pointer-events: none;
+}
+
+#music-player:hover {
+	transform: translateY(-5px);
+	background: rgba(255, 255, 255, 0.15);
+}
+
+#music-info {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+#music-title-container {
+	overflow: hidden;
+	white-space: nowrap;
+	width: 200px;
+}
+
+#music-title {
+	font-size: 14px;
+	font-weight: 500;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Visualizer Bars */
+#music-visualizer {
+	display: flex;
+	align-items: flex-end;
+	height: 20px;
+	gap: 2px;
+}
+
+.bar {
+	width: 4px;
+	background: #FFCC99;
+	border-radius: 2px;
+	height: 5px;
+	transition: height 0.1s ease;
+}
+
+/* Controls */
+#music-controls {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	margin-bottom: 8px;
+}
+
+.music-btn {
+	background: none;
+	border: none;
+	color: rgba(255, 255, 255, 0.9);
+	font-size: 18px;
+	/* Slightly smaller to fit */
+	cursor: pointer;
+	transition: transform 0.1s, color 0.1s;
+	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.music-btn:hover {
+	color: #FFCC99;
+	/* Peach accent */
+	transform: scale(1.1);
+}
+
+.music-btn:active {
+	transform: scale(0.95);
+}
+
+#music-play {
+	font-size: 24px;
+	/* Slightly smaller play button */
+}
+
+/* Volume Slider */
+#music-vol-container {
+	display: flex;
+	justify-content: center;
+}
+
+#music-volume {
+	-webkit-appearance: none;
+	width: 100%;
+	height: 4px;
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 2px;
+	outline: none;
+}
+
+#music-volume::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	width: 12px;
+	height: 12px;
+	background: #FFCC99;
+	border-radius: 50%;
+	cursor: pointer;
+	box-shadow: 0 0 5px rgba(255, 204, 153, 0.5);
+}
+
+/* Playing State Animation */
+#music-player.playing {
+	border-color: rgba(255, 204, 153, 0.4);
+	box-shadow: 0 8px 32px rgba(255, 204, 153, 0.15);
+}
+
+/* HUD SPEEDOMETER - Desktop Default (Top Right) */
+#hud-speed {
+	position: fixed;
+	top: 30px;
+	right: 30px;
+	text-align: right;
+	color: #2c1e1a;
+	font-family: 'Syncopate', monospace;
+	font-size: 48px;
+	font-weight: bold;
+	z-index: 1000;
+	pointer-events: none;
+	text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+	transform: none;
+	left: auto;
+	display: none;
+	/* Hidden initially, shown via JS on game start */
+}
+
+/* GEAR SHIFTER - Desktop Default (Hidden or specific place? Assume Mobile View logic handled via JS toggling container visibility? No, it's always there in HTML) 
+   Actually, the user only mentioned mobile specific layout changes in the prompt, but then said "now in desktop version, I want speedometer top right".
+   The gear shifter is part of #mobile-controls which is hidden by default and shown via JS for touch devices.
+   So we only need to style #gear-shifter-container for when it IS visible (Mobile).
+*/
+
+/* MOBILE LAYOUT (Applied when #mobile-controls is visible or via media query) */
+/* MOBILE / TABLET LAYOUT overrides */
+@media screen and (max-width: 1024px),
+screen and (max-height: 500px) {
+
+	/* Speedometer - Top Center for Mobile */
+	#hud-speed {
+		top: 20px !important;
+		left: 50% !important;
+		right: auto !important;
+		transform: translateX(-50%) !important;
+		text-align: center !important;
+		font-size: 36px !important;
+	}
+
+	/* Gear Shifter - Top Right for Mobile (Force Override) */
+	#gear-shifter-container {
+		top: 20px !important;
+		right: 20px !important;
+		bottom: auto !important;
+		left: auto !important;
+	}
+
+	/* Full Screen Button - Top Right (Left of Gear) */
+	.mobile-btn-round {
+		top: 20px !important;
+		right: 90px !important;
+		width: 40px !important;
+		height: 40px !important;
+	}
+}
+/* FORCE MOBILE CONTROLS ON SMALL SCREENS */
+@media (max-width: 800px) {
+    #mobile-controls {
+        display: flex !important;
+    }
+    .mobile-btn-round {
+        display: flex !important;
+    }
+    /* Hide desktop instructions */
+    .ctrls {
+        display: none !important;
+    }
+}
